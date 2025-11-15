@@ -1,0 +1,20 @@
+# Folder pamięci podręcznej Visual Studio
+.vs/
+
+# Foldery wyników kompilacji
+[Bb]in/
+[Oo]bj/
+[Rr]elease/
+[Dd]ebug/
+
+# Pliki specyficzne dla użytkownika (przechowują np. ustawienia okien)
+*.vcxproj.user
+*.suo
+
+# Inne pliki generowane
+*.exe
+*.pdb
+*.lib
+*.dll
+*.ipch
+*.db
