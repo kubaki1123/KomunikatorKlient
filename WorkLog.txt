@@ -1,0 +1,44 @@
+Dzień 1: Pełna integracja vcpkg i Qt5 (Debugowanie)
+
+Cel: Dodanie biblioteki qt5-base do projektu klienta w celu budowy GUI.
+
+Problem 1 (Manifest): Użycie trybu manifestu (vcpkg.json) początkowo nie działało.
+
+Problem 2 (Tryb Globalny): Po przejściu na tryb globalny (Manifest = No) i ręcznej instalacji, asio działało, ale qt5-base (dla x64) wciąż nie było wykrywane.
+
+Diagnoza 2: Log vcpkg install pokazał, że instalacja qt5-base trwała mniej niż 1 sekundę. vcpkg przywracał uszkodzoną kopię biblioteki ze swojej globalnej pamięci podręcznej (cache).
+
+Rozwiązanie 2:
+
+Ręczne usunięcie zawartości folderu cache vcpkg (w C:\Users\kplew\AppData\Local\vcpkg\archives).
+
+Ponowne uruchomienie .\vcpkg install qt5-base:x64-windows.
+
+Weryfikacja: Instalacja zakończyła się sukcesem, trwając 7.7 minuty, co potwierdziło poprawną kompilację qt5-base.
+
+Problem 3 (Integracja): Mimo że pliki Qt5 istniały na dysku (w .../include/Qt5), błąd Nie można otworzyć pliku... 'QApplication' nadal występował.
+
+Diagnoza 3: Automatyczna integracja vcpkg (vcpkg integrate install) nie poradziła sobie z poprawnym dodaniem złożonych ścieżek Qt do projektu.
+
+Rozwiązanie 3 (Ręczne): Wymuszono dodanie ścieżek we Właściwościach Projektu:
+
+C/C++ -> Ogólne -> Dodatkowe katalogi dołączania: Dodano ręcznie ścieżki do .../include/Qt5 i .../include/Qt5/QtWidgets.
+
+Konsolidator -> Ogólne -> Dodatkowe katalogi bibliotek: Dodano ręcznie ścieżkę do .../lib.
+
+Problem 4 (Linker): Pojawił się nowy błąd: nie można otworzyć pliku wejściowego „.obj”.
+
+Diagnoza 4: Błąd linkera spowodowany przez pustą linię lub brakujący wpis %(AdditionalDependencies) w polu Additional Dependencies (po naszej ręcznej edycji).
+
+Rozwiązanie 4: Poprawiono listę Additional Dependencies (Konsolidator -> Dane wejściowe), aby zawierała tylko wymagane biblioteki (Qt5Widgets.lib;Qt5Gui.lib;Qt5Core.lib;...) oraz kluczowy wpis %(AdditionalDependencies), usuwając wszelkie puste linie i podwójne średniki.
+
+Status: Wszystkie błędy kompilacji i konsolidacji zostały rozwiązane. Biblioteka Qt jest gotowa do uzycia.
+
+Cel: Rozpoczęcie budowy klienta komunikatora.
+
+Technologie: ASIO (backend sieciowy), Qt5 (frontend UI).
+
+Plan (ASIO): Stworzenie klasy Client obsługującej connect, async_read (pętla) i async_write.
+
+Plan (Qt5): Zdefiniowanie wymagań UI oraz kluczowej mechaniki integracji (Sygnały i Sloty) do komunikacji międzywątkowej.
+
