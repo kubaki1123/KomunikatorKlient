@@ -9,6 +9,7 @@ int main() {
 	try {
 		std::cout << "witaj w komunikatorze stronie dla klienta twoja pierwsza wyslana wiadomosc to bedzie twoj nick pod jakim inni moga wysylac do ciebie wiadomosci!" << std::endl;
 		std::cout << "jezeli chcesz wyslac wiadomosc przykladowo do boba musisz napisac jego nick. Bob:[wiadomosc] a jezeli wyslac wiadomosc do wszystkich to All:[wiadomosc]" << std::endl;
+		std::cout << "jezeli chcesz dostac informacje o po³¹czonych uzytkownikach napisz INFO" << std::endl;
 		std::cout << "jezeli chcesz zakonczyc program wpisz exit" << std::endl;
 		const int port = 8080;
 		asio::io_context io;
