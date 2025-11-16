@@ -1,17 +1,20 @@
 #pragma once
 #include<iostream>
 #include<asio.hpp>
+#include<memory>
 
-
-class Client {
+class Client: public std::enable_shared_from_this<Client>{
 private:
-	int port_;
-	void handle_connect();
-	void handle_read();
-	void handle_write();
+	
+	asio::ip::tcp::socket socket_;
+	asio::streambuf buffer_;
+	void handle_read(const asio::error_code& error, std::size_t bytes_transformed);
+	void handle_write(const asio::error_code& error, std::size_t bytes_transformed);
+	void handle_connect(const asio::error_code& error);
 public:
-	Client(int port);
-	void connect(int port);
+	Client(asio::io_context& io);
 	void async_read();
-	void async_write(std::string message);
+	void async_write(const std::string& message);
+	void connect(int port);
+	void close();
 };

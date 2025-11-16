@@ -42,3 +42,15 @@ Plan (ASIO): Stworzenie klasy Client obsługującej connect, async_read (pętla)
 
 Plan (Qt5): Zdefiniowanie wymagań UI oraz kluczowej mechaniki integracji (Sygnały i Sloty) do komunikacji międzywątkowej.
 
+
+Dzień 2: Implementacja pełnej logiki serwera i budowa klienta konsolowego
+
+Budowa Klienta:
+
+Stworzono kompletną, nową klasę Client z logiką connect, write i asynchroniczną pętlą read (na wzór Session).
+
+Zaimplementowano main.cpp dla klienta, który poprawnie tworzy obiekt (std::make_shared<Client>) i uruchamia dwa wątki: jeden dla io_context.run() (odbieranie) i jeden dla std::cin (wysyłanie).
+
+zakomentowano #include <QApplication> ponieważ chciał on blokować wątek dla siebie i dodano brakujące nagłówki (<thread>, <string>).
+
+Status: Oba projekty (serwer i klient) są teraz w pełni funkcjonalne i gotowe do wspólnego testowania.
