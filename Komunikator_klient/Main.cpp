@@ -14,7 +14,7 @@ int main() {
 		const int port = 8080;
 		asio::io_context io;
 
-		auto client = std::make_shared<Client>(io);
+		auto client = std::make_shared<Client::Client>(io);
 		client->connect(port);
 
 		std::thread asio_thread([&io]() {
