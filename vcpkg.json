@@ -1,6 +1,0 @@
-{
-  "dependencies": [
-    "asio",
-    "qt5-base"
-  ]
-}

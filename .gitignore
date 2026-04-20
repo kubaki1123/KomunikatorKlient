@@ -6,6 +6,8 @@
 [Oo]bj/
 [Rr]elease/
 [Dd]ebug/
+[Bb]uild/
+
 
 # Pliki specyficzne dla użytkownika (przechowują np. ustawienia okien)
 *.vcxproj.user

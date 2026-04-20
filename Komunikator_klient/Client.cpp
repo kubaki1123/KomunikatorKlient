@@ -19,7 +19,7 @@ namespace Client {
 
 	void Client::connect(int port) {
 		auto self = shared_from_this();
-		socket_.async_connect(asio::ip::tcp::endpoint(asio::ip::make_address("127.0.0.1"), port),
+		socket_.async_connect(asio::ip::tcp::endpoint(asio::ip::make_address("192.168.4.1"), port),
 			[this, self](const asio::error_code& error) {
 				handle_connect(error);
 			}
